@@ -53,32 +53,32 @@ public class ContatoServico
                       +         "<title>TODO supply a title</title>\n" 
                       +         "<meta charset=\"UTF-8\">\n"
                       +         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-                      +         "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\">/n"
+                      +         "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\">\n"
                       +     "</head>\n" 
                       +     "<body>\n"
-                      +         "<table style='border: 1px solid; border-collapse: collapse;'>\n"
-                      +             "<tr style='border: 1px solid; border-collapse: collapse;'>\n"
-                      +                 "<td style='border: 1px solid; border-collapse: collapse;'><b><i>Nome</b></i></td>\n"    
-                      +                 "<td style='border: 1px solid; border-collapse: collapse;'><b><i>E-mail<b><i></td>\n"
-                      +                 "<td style='border: 1px solid; border-collapse: collapse;'><b><i>Dúvida<b><i></td>\n"  
+                      +         "<table class=\"table table-hover table-sm\">\n"
+                      +             "<tr>\n"
+                      +                 "<td>Nome</td>\n"    
+                      +                 "<td>E-mail</td>\n"
+                      +                 "<td>Dúvida</td>\n"  
                       
                       +             "</tr>";
                       for(SolicitacaoContato sol: solicitacoes)
                       {
-                          String linhaTabela = "<tr style='border: 1px solid; border-collapse: collapse;'>";
+                          String linhaTabela = "<tr>";
                           
                           //Nome
-                          linhaTabela +="<td style='border: 1px solid; border-collapse: collapse;'>";
+                          linhaTabela +="<td>";
                           linhaTabela +=sol.nome;
                           linhaTabela +="</td>";
                           
                           //E-mail
-                          linhaTabela +="<td style='border: 1px solid; border-collapse: collapse;'>";
+                          linhaTabela +="<td>";
                           linhaTabela +=sol.email;
                           linhaTabela +="</td>";
                           
                           //Dúvida
-                          linhaTabela +="<td style='border: 1px solid; border-collapse: collapse;'>";
+                          linhaTabela +="<td>";
                           linhaTabela +=sol.duvida;
                           linhaTabela +="</td>";
                           
