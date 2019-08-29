@@ -88,7 +88,7 @@ public class ContatoServico
                       }
                       html+= "</table>\n"
                       
-                      +      "<a href=Principal.html>Voltar</a>"
+                      +      "<a href=Principal.xhtml>Voltar</a>"
                               
                       +     "</body>\n"   
                       +  "</html>\n";
