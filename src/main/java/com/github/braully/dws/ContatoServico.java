@@ -8,6 +8,7 @@ package com.github.braully.dws;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class ContatoServico 
 {
-    List<SolicitacaoContato>solicitacoes = new ArrayList<>();
+    //List<SolicitacaoContato>solicitacoes = new ArrayList<>();
+    @Autowired
+    SolicitacaoContatoDAO conexaoBanco;
     
     @RequestMapping("/processar-form-contato")
     public String recebeDadosParaContato(@RequestParam Map<String, String> todosParametros)
@@ -35,12 +38,12 @@ public class ContatoServico
         novaSolicitacao.duvida = todosParametros.get("duvida");
         
         
-        System.out.println("Solicitações anteriores: " + solicitacoes);
+       // System.out.println("Solicitações anteriores: " + solicitacoes);
         System.out.println("Nova solicitção recebida: " + novaSolicitacao);
         
-        solicitacoes.add(novaSolicitacao);
+        conexaoBanco.save(novaSolicitacao);
         
-        return "redirect:/Principal.html";
+        return "redirect:/Principal.xhtml";
    
     }
     @RequestMapping("/todas-solicitacoes")
@@ -63,7 +66,7 @@ public class ContatoServico
                       +                 "<td>Dúvida</td>\n"  
                       
                       +             "</tr>";
-                      for(SolicitacaoContato sol: solicitacoes)
+                      for(SolicitacaoContato sol: conexaoBanco.findAll())
                       {
                           String linhaTabela = "<tr>";
                           
