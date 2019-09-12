@@ -1,9 +1,11 @@
 package com.github.braully.dws;
 
 import com.sun.faces.config.ConfigureListener;
+import java.util.Map;
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
+import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -35,12 +37,12 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
     public static void main(String... args) {
         SpringApplication.run(AplicacaoWeb.class, args);
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("usuario")
@@ -49,10 +51,10 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
 
         UserDetails admin = User.withUsername("sky")
                 .password(passwordEncoder().encode("net"))
-                .roles("fodão","fodãoSPlus").build();
+                .roles("fodão", "fodãoSPlus").build();
         return new InMemoryUserDetailsManager(user, admin);
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -64,12 +66,12 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
                 .antMatchers("/*.css").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin()
-                .loginPage("/Login.html")
+                .loginPage("/Login.xhtml")
+                .permitAll()
                 .loginProcessingUrl("/login")
                 .permitAll().and()
                 .logout().permitAll();
     }
-
 
     @Bean
     public ServletRegistrationBean servletRegistrationBean() {
@@ -87,12 +89,19 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
     public void setServletContext(ServletContext servletContext) {
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
     }
-    
+
     @Bean
-        @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource datasource() {
         return DataSourceBuilder.create().build();
     }
 
+    @Bean
+    public static CustomScopeConfigurer viewScope() {
+        CustomScopeConfigurer configurer = new CustomScopeConfigurer();
+        configurer.setScopes(
+                Map.of("view", new ViewScope()));
+        return configurer;
+    }
 
 }

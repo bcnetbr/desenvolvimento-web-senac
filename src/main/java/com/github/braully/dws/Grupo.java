@@ -5,20 +5,18 @@
  */
 package com.github.braully.dws;
 
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Aluno
  */
 @Entity
-public class Usuario {
+public class Grupo {
     
     @Id
     @GeneratedValue
@@ -26,34 +24,42 @@ public class Usuario {
     
     @Column(unique = true)
     @Basic      
-    String login;
+    String nome;
     
     @Basic
-    String senha;
+    String grupo;
     
-    @ManyToMany
-    Set<Grupo> gruposUsuario; 
-    
-    public String getLogin() {
-        return login;
+    @Basic
+    String permissoes;
+
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getGrupo() {
+        return grupo;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
     }
-    
+
+    public String getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(String permissoes) {
+        this.permissoes = permissoes;
+    }
+
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }

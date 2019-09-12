@@ -6,12 +6,14 @@
 package com.github.braully.dws;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Aluno
  */
+@Scope("view")
 @Component
 public class UsuarioMB {
     
