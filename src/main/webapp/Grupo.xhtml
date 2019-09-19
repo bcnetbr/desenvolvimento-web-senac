@@ -20,20 +20,20 @@ and open the template in the editor.
                             showSummary="true"/>
                 
                 <div class="form-row">
-                    <div class="form-group col-md-6">  
-                        <label>Nome</label>
-                        <h:inputText class="form-control" validatorMessage = "O campo nome é obrigatório" value ="#{grupoMB.grupo.nome}">
-                             <f:validateRequired/>
+                    
+                    <div class="form-group col-md-12">  
+                        <label>Grupo</label>
+                        <h:inputText class="form-control" validatorMessage="O campo grupo é obrigatório" value="#{grupoMB.grupo.grupo}">
+                            <f:validateRequired/>
                         </h:inputText>
                     </div>
-                    <div class="form-group col-md-6">  
-                        <label>Grupo</label>
-                        <h:inputText class="form-control" value ="#{grupoMB.grupo.grupo}"/>
-                    </div>
                     <div class="form-group col-md-12">  
-                        <label>Permissões</label>
-                        <h:inputText class="form-control" value ="#{grupoMB.grupo.permissoes}"/>
+                        <label>Descrição</label>
+                        <h:inputText class="form-control" validatorMessage="O campo descrição é obrigatório" value="#{grupoMB.grupo.descricao}">
+                            <f:validateRequired/>
+                        </h:inputText>
                     </div>
+                    
                 </div>
                 <h:commandButton class="btn btn-dark" action="#{grupoMB.salvarGrupo()}"  value="Salvar"/>
 

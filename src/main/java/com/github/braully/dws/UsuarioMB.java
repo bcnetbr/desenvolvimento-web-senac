@@ -34,4 +34,13 @@ public class UsuarioMB {
         usuario = new Usuario();
     }
     
+    String[] gruposSelecionados;
+    public String[] getGruposSelecionados(){
+        return gruposSelecionados;
+    }
+
+    public void setGruposSelecionados(String[] gruposSelecionados) {
+        this.gruposSelecionados = gruposSelecionados;
+    }
+    
 }
