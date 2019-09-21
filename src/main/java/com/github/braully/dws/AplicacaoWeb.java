@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,8 +42,21 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        //return new BCryptPasswordEncoder();
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence cs) {
+                return cs.toString();
+            }
+
+            @Override
+            public boolean matches(CharSequence cs, String string) {
+                return cs.toString().equals(string);
+            }
+        };
+        
     }
+    
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -55,6 +70,19 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
         return new InMemoryUserDetailsManager(user, admin);
     }
 
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(datasource())
+                .usersByUsernameQuery(
+                        "select login as username, senha as password, true as enabled from usuario where login=?")
+                .authoritiesByUsernameQuery(
+                        "select login as username, g.grupo as role "
+                        + "from grupo g"
+                        + " inner join usuario_grupos_usuario ug on ug.grupos_usuario_id = g.id"
+                        + " inner join usuario u on ug.usuario_id = u.id "
+                        + "where login=?");
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -62,7 +90,7 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
                 .antMatchers("/").permitAll()
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/Principal.xhtml").permitAll()
-                .antMatchers("/todas-solicitacoes").hasRole("fodão")
+                .antMatchers("/todas-solicitacoes").hasAnyRole("fodão","Administrador")
                 .antMatchers("/*.css").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin()
@@ -103,5 +131,6 @@ public class AplicacaoWeb extends WebSecurityConfigurerAdapter implements Servle
                 Map.of("view", new ViewScope()));
         return configurer;
     }
+    
 
 }

@@ -9,7 +9,7 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-      
+
     <ui:composition template="/Principal.xhtml">
         <ui:define name="titulo">Usuario</ui:define>
 
@@ -29,9 +29,11 @@ and open the template in the editor.
                     </div>
                     <div class="form-group col-md-6">
                         <label>Senha</label>
-                        <h:inputSecret class="form-control" value = "#{usuarioMB.usuario.senha}"/>
+                        <h:inputSecret class="form-control" validatorMessage = "O campo senha é obrigatório" value = "#{usuarioMB.usuario.senha}">
+                            <f:validateRequired/>
+                        </h:inputSecret>  
                     </div>
-                   
+
                     <div class="form-group col-md-12">
                         <label for="sel2">Selecione um grupo:</label>
                         <select multiple="multiple" 
@@ -39,18 +41,18 @@ and open the template in the editor.
                                 class="form-control" 
                                 id="sel2" 
                                 jsfc="h:selectManyListbox">
-                            
+
                             <f:selectItems  value="#{grupoMB.listaGrupos}"
                                             var="grp" itemValue="#{grp.id}"
                                             itemLabel="#{grp.grupo}"/> 
-                            
-                            
+
+
                         </select>
 
                     </div>
-                   
+
                 </div>
-                 <h:commandButton class="btn btn-dark" action="#{usuarioMB.salvarUsuario()}" value="Salvar"/>
+                <h:commandButton class="btn btn-dark" action="#{usuarioMB.salvarUsuario()}" value="Salvar"/>
             </h:form>
         </ui:define>
 

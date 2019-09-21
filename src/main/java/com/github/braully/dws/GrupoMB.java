@@ -7,6 +7,8 @@ package com.github.braully.dws;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -31,6 +33,7 @@ public class GrupoMB {
     
     public void salvarGrupo(){
         grupoDAO.save(grupo);
+        FacesContext . getCurrentInstance(). addMessage( null , new FacesMessage ("Grupo salvo com sucesso"));
         grupo = new Grupo();
     }
     
