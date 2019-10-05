@@ -100,4 +100,10 @@ public class ContatoServico
         
         return html;
     }
+    @RequestMapping(value = "/contato/todos-ws")
+    @ResponseBody
+    public Iterable<SolicitacaoContato> todosContatos() {
+        return this.conexaoBanco.findAll();
+    }
+
 }
