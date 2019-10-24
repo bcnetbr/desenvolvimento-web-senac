@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+        <table id="tabela">
+            <tr>
+                <th>id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Duvida</th>
+            </tr>
+        </table>
+
+            <script>
+                $.get('/contato/todos-ws').done(function(data){
+                
+                        
+                        for (var i = 0; i < data.length; i++) {
+                            
+                            $('#tabela').append(
+                                $('<tr></tr>').append(
+                                    $('<td></td>').text(data[i].id),
+                                    $('<td></td>').text(data[i].nome),
+                                    $('<td></td>').text(data[i].email),
+                                    $('<td></td>').text(data[i].duvida),
+                                )
+                            );
+                                        
+                        }
+                        
+                    
+                });
+                
+               
+            </script>
+       
+    </body>
+</html>
