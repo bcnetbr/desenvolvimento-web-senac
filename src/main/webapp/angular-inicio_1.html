@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <link rel="stylesheet" href="product.css" type="text/css"/>
+
+        <title>Hello World - HTML</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    </head>
+
+    <body>
+        <div ng-app="app" ng-controller="cnt">  
+            <table id="tabela" class="table table-hover">
+                <tr>
+                    <th>id</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Duvida</th>
+                    
+                </tr>
+                <tr ng-repeat="o in dados">
+                    <td>{{o.id}}</td>
+                    <td>{{o.nome}}</td>
+                    <td>{{o.email}}</td>
+                    <td>{{o.duvida}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            angular.module('app',[]).controller('cnt',function($scope, $http){
+                $http.get("/contato/todos-ws").then(function(response){$scope.dados = response.data;
+                });
+            });
+        </script>
+    </body>
+</html> 
